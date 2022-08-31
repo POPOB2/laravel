@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\BikeController; // 告訴 使用 BikeController
+// 通常Controllers內的檔案都用單數
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +18,38 @@ use App\Http\Controllers\TestController;
 |
 */
 
+// 取上面use的BikeController 的class的名稱為BikeController
+Route::resource('bikes', BikeController::class); // 這裡剛好相同名稱 誤搞混
+// http://localhost/LARAVEL/example-app/public/bikes/create
+// 差異:改用網址帶值
+
+// Route::resource('bikes', [BikeController::class,"create"]); // 這裡剛好相同名稱 誤搞混
+// http://localhost/LARAVEL/example-app/public/bikes
+// 差異:不用開檔案改後方create的路由的部分變化
+
+// --------------------------------原版function--------------------------------------
 Route::get('/', function () {
     return view('welcome');
 });
+// ----------------------------------------------------------------------
+// Route::get('/student', function () {
+//     return view('StudentController.index');
+// });
+
+// Route::get('/student', [StudentController::class,'index']);
+
+// 此為在網址上帶兩個變數, 分別為name和num, 然後依需求使用, 就目前來看 輸入隨便兩個值 都會到index
+Route::get('/student/{name}/{num}', [StudentController::class,'index']);
+
+// 為連結 取 別名 (注意:是取別名 不是更改名字)
+Route::get('/student', [StudentController::class,'index'])->name('student456');
+
+
+// ----------------------------------------------------------------------
+Route::get('/', function () {
+    return view('welcome');
+});
+// ----------------------------------------------------------------------
 Route::get('/dd', function () {
     return view('dd');
 });
