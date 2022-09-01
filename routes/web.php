@@ -31,6 +31,9 @@ Route::resource('bikes', BikeController::class); // 這裡剛好相同名稱 誤
 Route::get('/', function () {
     return view('welcome');
 });
+// ---------------------------------2022.9.1 資料表連線-------------------------------------
+Route::resource('students', StudentController::class);
+
 // ----------------------------------------------------------------------
 // Route::get('/student', function () {
 //     return view('StudentController.index');
@@ -42,7 +45,8 @@ Route::get('/', function () {
 Route::get('/student/{name}/{num}', [StudentController::class,'index']);
 
 // 為連結 取 別名 (注意:是取別名 不是更改名字)
-Route::get('/student', [StudentController::class,'index'])->name('student456');
+// Route::get('/student', [StudentController::class,'index'])->name('student456');
+Route::get('/student', [StudentController::class,'index']);
 
 
 // ----------------------------------------------------------------------
