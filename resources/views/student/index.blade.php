@@ -25,6 +25,7 @@
         <th>chinese</th>
         <th>english</th>
         <th>math</th>
+        <th>操作</th>
       </tr>
     </thead>
     <!-- @foreach ($data as $student) -->
@@ -33,6 +34,7 @@
    
     
     <tbody>
+      <!-- 使用foreach從 控制台/控制台資料create裡設定的$data撈出資料 -->
     @foreach ($data as $student)
       <tr>
         <td>{{$student->id}}</td>
@@ -40,6 +42,18 @@
         <td>{{$student->chinese}}</td>
         <td>{{$student->english}}</td>
         <td>{{$student->math}}</td>
+        <!-- php artisan route:list 查看 URI 這裡是 students/{student}/edit 
+             網址帶值 語意化-->
+        <td>
+          <a href="{{route('students.edit',$student->id)}}" class="mb-3 btn btn-success" role="button">編輯</a>
+        <!-- delete因為沒有form表單傳值, 所以不能用和上述的編輯一樣的方法製作, 這裡給一個form表單建立delete -->
+        <form action="{{route('students.destroy',$student->id)}}" method="post">
+          @csrf
+          @method('DELETE')
+          <input type="submit" class="mb-3 btn btn-danger" value="刪除">
+        </form>
+
+        </td>
       </tr>
     @endforeach
     </tbody>
